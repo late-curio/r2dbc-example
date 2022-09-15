@@ -37,6 +37,12 @@ public class ItemController {
                 .map(this::from);
     }
 
+    @GetMapping("/allthethings")
+    public Flux<ItemResource> allTheThings() {
+        return itemRepository.findAll()
+                .map(this::from);
+    }
+
     private Item from(NewItemResource resource) {
         Item item = new Item();
         item.setDescription(resource.getDescription());
