@@ -1,9 +1,7 @@
 package latecurio.webgres;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -20,6 +18,22 @@ public class ItemController {
     public Mono<ItemResource> create(@RequestBody final NewItemResource newItemResource) {
 
         return itemRepository.save(from(newItemResource))
+                .map(this::from);
+    }
+
+    @GetMapping("/{id}")
+    public Mono<ItemResource> get(@PathVariable Long id) {
+
+        return itemRepository.findById(id)
+                .map(this::from);
+    }
+
+    @GetMapping
+    public Flux<ItemResource> getAll(@RequestParam String ids) {
+
+        return Flux.just(ids.split(","))
+                        .map(Long::parseLong)
+                .flatMap(itemRepository::findById)
                 .map(this::from);
     }
 
