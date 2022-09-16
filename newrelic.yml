@@ -15,7 +15,7 @@ common: &default_settings
   # account. For example, if your license key is 12345 use this:
   # license_key: '12345'
   # The key binds your Agent's data to your account in the New Relic service.
-  license_key: 'e61999cb36eb44d600102fad03031c291256NRAL'
+  license_key: $NEW_RELIC_LICENSE_KEY
 
   # Agent Enabled
   # Use this setting to disable the agent instead of removing it from the startup command.
@@ -31,8 +31,7 @@ common: &default_settings
   # app_name: My Application;My Application 2
   # This setting is required. Up to 3 different application names can be specified.
   # The first application name must be unique.
-  app_name: mysql-r2dbc
-
+  app_name: mysql-rdbc
 
   # To enable high security, set this property to true. When in high
   # security mode, the agent will use SSL and obfuscated SQL. Additionally,
@@ -250,7 +249,7 @@ common: &default_settings
     # This instrumentation reports the name of the user principal returned from
     # HttpServletRequest.getUserPrincipal() when servlets and filters are invoked.
     com.newrelic.instrumentation.java.completable-future-jdk8u40:
-      enabled: false
+      enabled: true
       
     com.newrelic.instrumentation.servlet-user:
       enabled: false
@@ -311,4 +310,5 @@ production:
 staging:
   <<: *default_settings
   host: staging-collector.newrelic.com
-  app_name: mysql-r2dbc
+  app_name: mysql-rdbc
+
